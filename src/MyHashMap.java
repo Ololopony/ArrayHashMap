@@ -1,3 +1,5 @@
+
+
 public class MyHashMap<K, V> {
 
 	private final int DEFAULT_CAPACITY = 8;
@@ -49,13 +51,13 @@ public class MyHashMap<K, V> {
 			table[hashCode] = new Entry<>(key, value);
 		} else {
 			while (entry.next != null) {
-				if (entry.getKey() == key) {
+				if (entry.getKey().equals(key)) {
 					entry.setValue(value);
 					return;
 				}
 				entry = entry.next;
 			}
-			if (entry.getKey() == key) {
+			if (entry.getKey().equals(key)) {
 				entry.setValue(value);
 				return;
 			}
@@ -71,7 +73,7 @@ public class MyHashMap<K, V> {
 			return null;
 		}
 		while (entry != null) {
-			if (entry.getKey() == key) {
+			if (entry.getKey().equals(key)) {
 				return entry.getValue();
 			}
 			entry = entry.next;
@@ -87,26 +89,49 @@ public class MyHashMap<K, V> {
 			return null;
 		}
 	
-		if (entry.getKey() == key) {
+		if (entry.getKey().equals(key)) {
 			table[hash] = entry.next;
 			entry.next = null;
 			return entry.getValue();
 		}
 	
-		Entry<K, V> prev = entry;
-		entry = entry.next;
-	
+		return null;
+	}
+
+	public boolean containsKey(K key) {
+		int hashCode = key.hashCode() % DEFAULT_CAPACITY;
+		Entry<K, V> entry = table[hashCode];
+
+		if (entry == null) {
+			return false;
+		}
 		while (entry != null) {
-			if (entry.getKey() == key) {
-				prev.next = entry.next;
-				entry.next = null;
-				return entry.getValue();
+			if (entry.getKey().equals(key)) {
+				return true;
 			}
-			prev = entry;
 			entry = entry.next;
 		}
-	
-		return null;
+		return false;
+	}
+
+	public boolean containsValue(V value) {
+		Entry<K, V> entry;
+		for (int i = 0; i < table.length; i++) {
+			if (table[i] == null) {
+				continue;
+			}
+			entry = table[i];
+			while (entry.next != null) {
+				if (entry.getValue().equals(value)) {
+					return true;
+				}
+				entry = entry.next;
+			}
+			if (entry.getValue().equals(value)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
