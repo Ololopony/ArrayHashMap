@@ -1,14 +1,13 @@
 public class App {
     public static void main(String[] args) throws Exception {
-        MyArrayList<Integer> ints = new MyArrayList<>();
-        ints.add(1);
-        ints.add(2);
-        ints.add(3);
-        ints.add(4);
-        ints.add(5);
-        ints.add(6);
-        ints.add(4, 8);
-        ints.add(4, 8);
-        System.out.println(ints.toString());
+        MyHashMap<Integer, String> myHashMap = new MyHashMap<>();
+        myHashMap.put(1, "A");
+        myHashMap.put(2, "B");
+        myHashMap.put(3, "C");
+        myHashMap.put(4, "D");
+        myHashMap.put(5,  "E");
+        myHashMap.put(6, "F");
+    
+        System.out.println(myHashMap);
     }
 }
